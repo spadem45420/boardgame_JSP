@@ -17,15 +17,29 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+import controller.GlobalService;
 import model.MemberBean;
 import model.MemberDAO;
 
 @SuppressWarnings("unused")
 public class MemberDAOJdbc implements MemberDAO {
-	private static final String URL = "jdbc:sqlserver://localhost:1433;database=boardgames";
-	private static final String USERNAME = "sa";
-	private static final String PASSWORD = "123456";
 	
+	private DataSource ds;
+	
+	public MemberDAOJdbc(){
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup(GlobalService.JNDI_DB_NAME);//使用GlobalService中的屬性
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	private static final String SELECT_BY_ID = "select * from Member where username=?";
 	@Override
@@ -36,7 +50,7 @@ public class MemberDAOJdbc implements MemberDAO {
 		ResultSet rset = null;
 		
 		try {
-			conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = ds.getConnection();
 			stmt = conn.prepareStatement(SELECT_BY_ID);
 			stmt.setString(1,username);
 			rset = stmt.executeQuery();
@@ -102,7 +116,7 @@ public class MemberDAOJdbc implements MemberDAO {
 		ResultSet rset = null;
 		
 		try {
-			conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = ds.getConnection();
 			stmt = conn.prepareStatement(SELECT_ALL);
 			rset = stmt.executeQuery();
 			
@@ -174,7 +188,7 @@ public class MemberDAOJdbc implements MemberDAO {
 		MemberBean result = null;
 		
 		try {
-			conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = ds.getConnection();
 			stmt = conn.prepareStatement(INSERT);
 
 			result = new MemberBean();
@@ -239,7 +253,7 @@ public class MemberDAOJdbc implements MemberDAO {
 		MemberBean result = null;
 		
 		try {
-			conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = ds.getConnection();
 			stmt = conn.prepareStatement(UPDATE);
 			stmt.setBytes(1,bean.getPswd());
 			stmt.setString(2,bean.getEmail());
@@ -297,7 +311,7 @@ public class MemberDAOJdbc implements MemberDAO {
 		PreparedStatement stmt = null;
 		
 		try {
-			conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = ds.getConnection();
 			stmt = conn.prepareStatement(DELETE);
 			stmt.setString(1, username);
 			int i = stmt.executeUpdate();
@@ -343,36 +357,36 @@ public class MemberDAOJdbc implements MemberDAO {
 		
 		
 		//insert
-		MemberBean bean = new MemberBean();
-		File f = null;
-		FileInputStream fis = null;
-		long length = 0;
-			
-			try {
-				f = new File("img/java_duke.jpg");
-				fis = new FileInputStream(f);
-				length = f.length();		
-			bean.setUsername("Bob4");
-			bean.setPswd("Bob".getBytes());
-			bean.setEmail("Bob@gmail.com");
-			bean.setLastname("鮑勃");
-			bean.setFirstname("張");
-			bean.setGender("man");
-			bean.setNickname("Bob");
-			bean.setBirthday(new java.util.Date());
-			bean.setIdCard("B123456987");
-			bean.setJoinDate(new java.util.Date());
-			bean.setPhone("0988456789");
-			bean.setMemberAddress("新北市新莊區思源路370巷");
-			bean.setImgFileName("java_duke.jpg");
-			dao.insert(bean,fis,length);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//		MemberBean bean = new MemberBean();
+//		File f = null;
+//		FileInputStream fis = null;
+//		long length = 0;
+//			
+//			try {
+//				f = new File("img/java_duke.jpg");
+//				fis = new FileInputStream(f);
+//				length = f.length();		
+//			bean.setUsername("Bob4");
+//			bean.setPswd("Bob".getBytes());
+//			bean.setEmail("Bob@gmail.com");
+//			bean.setLastname("鮑勃");
+//			bean.setFirstname("張");
+//			bean.setGender("man");
+//			bean.setNickname("Bob");
+//			bean.setBirthday(new java.util.Date());
+//			bean.setIdCard("B123456987");
+//			bean.setJoinDate(new java.util.Date());
+//			bean.setPhone("0988456789");
+//			bean.setMemberAddress("新北市新莊區思源路370巷");
+//			bean.setImgFileName("java_duke.jpg");
+//			dao.insert(bean,fis,length);
+//			} catch (FileNotFoundException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 			
 		
 		

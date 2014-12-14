@@ -13,15 +13,29 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+import controller.GlobalService;
 import model.MemberBean;
 import model.StoreMemberBean;
 import model.StoreMemberDAO;
 
-public class StoreMemberJdbc implements StoreMemberDAO {
-	private static final String URL = "jdbc:sqlserver://localhost:1433;database=boardgames";
-	private static final String USERNAME = "sa";
-	private static final String PASSWORD = "123456";
+public class StoreMemberDAOJdbc implements StoreMemberDAO {
 	
+	private DataSource ds;
+	
+	public StoreMemberDAOJdbc(){
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup(GlobalService.JNDI_DB_NAME);//使用GlobalService中的屬性
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	private static final String SELECT_BY_ID = "select * from StoreMember where storeUsername=?";
 	@Override
@@ -32,7 +46,7 @@ public class StoreMemberJdbc implements StoreMemberDAO {
 		ResultSet rset = null;
 		
 		try {
-			conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = ds.getConnection();
 			stmt = conn.prepareStatement(SELECT_BY_ID);
 			stmt.setString(1,storeUsername);
 			rset = stmt.executeQuery();
@@ -87,7 +101,7 @@ public class StoreMemberJdbc implements StoreMemberDAO {
 		ResultSet rset = null;
 		
 		try {
-			conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = ds.getConnection();
 			stmt = conn.prepareStatement(SELECT_ALL);
 			rset = stmt.executeQuery();
 			
@@ -145,7 +159,7 @@ public class StoreMemberJdbc implements StoreMemberDAO {
 		StoreMemberBean result = null;
 		
 		try {
-			conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = ds.getConnection();
 			stmt = conn.prepareStatement(INSERT);
 
 			result = new StoreMemberBean();
@@ -190,7 +204,7 @@ public class StoreMemberJdbc implements StoreMemberDAO {
 		StoreMemberBean result = null;
 		
 		try {
-			conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = ds.getConnection();
 			stmt = conn.prepareStatement(UPDATE);
 
 			stmt.setBytes(1,bean.getStorePswd());
@@ -231,7 +245,7 @@ public class StoreMemberJdbc implements StoreMemberDAO {
 		PreparedStatement stmt = null;
 		
 		try {
-			conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = ds.getConnection();
 			stmt = conn.prepareStatement(DELETE);
 			stmt.setString(1, storeUsername);
 			int i = stmt.executeUpdate();
@@ -263,7 +277,7 @@ public class StoreMemberJdbc implements StoreMemberDAO {
 	}
 
 	public static void main(String[] args) {
-		StoreMemberJdbc dao = new StoreMemberJdbc();
+		StoreMemberDAOJdbc dao = new StoreMemberDAOJdbc();
 		
 		//select by id
 //		System.out.println(dao.select("Allcognus"));
