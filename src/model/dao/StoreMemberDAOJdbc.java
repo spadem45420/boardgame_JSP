@@ -30,7 +30,7 @@ public class StoreMemberDAOJdbc implements StoreMemberDAO {
 	public StoreMemberDAOJdbc(){
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup(GlobalService.JNDI_DB_NAME);//¨Ï¥ÎGlobalService¤¤ªºÄÝ©Ê
+			ds = (DataSource) ctx.lookup(GlobalService.JNDI_DB_NAME);//ä½¿ç”¨GlobalServiceä¸­çš„å±¬æ€§
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

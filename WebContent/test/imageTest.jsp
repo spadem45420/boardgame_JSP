@@ -4,9 +4,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=BIG5">
-<title>Insert title here</title>
+<title>imageTest</title>
 </head>
 <body>
-<img src='${pageContext.servletContext.contextPath}/controller/GetImage?id=Bob4'>
+<!-- 英文檔名 -->
+<%-- <img src='${pageContext.servletContext.contextPath}/controller/GetImage?id=Bob4'> --%>
+
+<!-- 中文檔名 -->
+<img src='${pageContext.servletContext.contextPath}/controller/GetImage?id=Bob456'>
 </body>
 </html>

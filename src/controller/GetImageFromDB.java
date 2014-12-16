@@ -45,8 +45,12 @@ public class GetImageFromDB extends HttpServlet {
 				String fileName = rs.getString(1);
 				is = rs.getBinaryStream(2);
 				String mimeType = getServletContext().getMimeType(fileName);
-				response.setContentType(mimeType);//³]©w¿é¥Xªºtype
-				response.addHeader("Content-Disposition","attachment;filename=" + fileName);//³]©wÀÉ¦W
+				response.setContentType(mimeType);//è¨­å®šè¼¸å‡ºçš„type
+//				response.addHeader("Content-Disposition","attachment;filename=" + fileName);//è¨­å®šæª”å
+//				response.addHeader("Content-Disposition","attachment;filename=" 
+//							+ new String( "ä¸­æ–‡".getBytes("Big5"), "ISO8859_1" ));//ä¸­æ–‡æ¸¬è©¦
+				response.addHeader("Content-Disposition","attachment;filename="
+							+ new String( fileName.getBytes("Big5"), "ISO8859_1" ));
 				os = response.getOutputStream();
 				
 				int count = 0;
@@ -69,7 +73,7 @@ public class GetImageFromDB extends HttpServlet {
 		}finally {
 			if (conn != null) {
 				try {
-					conn.close(); // ¤@©w­nµù¸Ñ¦¹¦æ¨Ó°õ¦æ¥»µ{¦¡¤­¦¸
+					conn.close(); // ä¸€å®šè¦è¨»è§£æ­¤è¡Œä¾†åŸ·è¡Œæœ¬ç¨‹å¼äº”æ¬¡
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}

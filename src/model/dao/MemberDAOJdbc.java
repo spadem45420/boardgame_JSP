@@ -34,7 +34,7 @@ public class MemberDAOJdbc implements MemberDAO {
 	public MemberDAOJdbc(){
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup(GlobalService.JNDI_DB_NAME);//¨Ï¥ÎGlobalService¤¤ªºÄİ©Ê
+			ds = (DataSource) ctx.lookup(GlobalService.JNDI_DB_NAME);//ä½¿ç”¨GlobalServiceä¸­çš„å±¬æ€§
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -369,15 +369,15 @@ public class MemberDAOJdbc implements MemberDAO {
 //			bean.setUsername("Bob4");
 //			bean.setPswd("Bob".getBytes());
 //			bean.setEmail("Bob@gmail.com");
-//			bean.setLastname("Àj«k");
-//			bean.setFirstname("±i");
+//			bean.setLastname("é®‘å‹ƒ");
+//			bean.setFirstname("å¼µ");
 //			bean.setGender("man");
 //			bean.setNickname("Bob");
 //			bean.setBirthday(new java.util.Date());
 //			bean.setIdCard("B123456987");
 //			bean.setJoinDate(new java.util.Date());
 //			bean.setPhone("0988456789");
-//			bean.setMemberAddress("·s¥_¥«·s²ø°Ï«ä·½¸ô370«Ñ");
+//			bean.setMemberAddress("æ–°åŒ—å¸‚æ–°èŠå€æ€æºè·¯370å··");
 //			bean.setImgFileName("java_duke.jpg");
 //			dao.insert(bean,fis,length);
 //			} catch (FileNotFoundException e) {
@@ -405,15 +405,15 @@ public class MemberDAOJdbc implements MemberDAO {
 //			bean.setUsername("Bob1123");
 //			bean.setPswd("Bob".getBytes());
 //			bean.setEmail("Bob@gmail.com");
-//			bean.setLastname("Àj«k");
-//			bean.setFirstname("ªL");
+//			bean.setLastname("é®‘å‹ƒ");
+//			bean.setFirstname("æ—");
 //			bean.setGender("man");
 //			bean.setNickname("Bob");
 //			bean.setBirthday(new java.util.Date());
 //			bean.setIdCard("B123456987");
 //			bean.setJoinDate(new java.util.Date());
 //			bean.setPhone("0988456789");
-//			bean.setMemberAddress("·s¥_¥«·s²ø°Ï«ä·½¸ô370«Ñ");
+//			bean.setMemberAddress("æ–°åŒ—å¸‚æ–°èŠå€æ€æºè·¯370å··");
 //			bean.setImgFileName("java_duke2.jpg");
 ////			bean.setGroupBan(false);
 ////			bean.setCommentBan(false);
@@ -437,7 +437,7 @@ public class MemberDAOJdbc implements MemberDAO {
 		
 		
 		
-		//¨ú¥X¹Ï¤ù
+		//å–å‡ºåœ–ç‰‡
 //		try {
 //			File f = new File("img/java_duke_out.jpg");
 //			Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
